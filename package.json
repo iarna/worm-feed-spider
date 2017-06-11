@@ -1,0 +1,19 @@
+{
+  "name": "feeds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rss.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Rebecca Turner <me@re-becca.org> (http://re-becca.org/)",
+  "license": "ISC",
+  "dependencies": {
+    "duplexify": "^3.5.0",
+    "feedme": "^1.0.0",
+    "funstream": "^2.1.1",
+    "moment": "^2.18.1",
+    "sorted-object": "^2.0.1"
+  }
+}
