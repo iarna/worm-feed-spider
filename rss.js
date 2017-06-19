@@ -13,6 +13,9 @@ const Fic = use('fic')
 const moment = require('moment')
 const sortedObject = require('sorted-object')
 const blacklist = require('./blacklist.json')
+const linkNormalize = require('../link-normalize.js')
+
+Object.keys(blacklist).forEach(k => blacklist[linkNormalize(k)] = true)
 
 const indexLink = {}
 Object.keys(index.link).forEach(l => indexLink[l] = linkNormalize(l))
@@ -65,7 +68,7 @@ class UpdateRSS {
       }))
       .filter(item => !wormFilter || /worm/i.test(item.title))
       .filter(item => !/axxor/i.test(item.author))
-      .filter(item => !blacklist[item.link])
+      .filter(item => !blacklist[item.linkN])
       .map(item => {
         process.stdout.write('.')
         const matches = Object.keys(index.link)
@@ -79,7 +82,7 @@ class UpdateRSS {
           }
         }
         if (!item.file) {
-          todo.add[item.link] = item.title
+          todo.add[item.linkN] = item.title
         }
         return item
       })
@@ -99,11 +102,3 @@ class UpdateRSS {
 }
 
 module.exports = UpdateRSS
-
-function linkNormalize (link) {
-  return link
-    .replace(/https?:/, 'https:')
-    .replace(/forum.question/, 'question')
-    .replace(/[/]$/, '')
-    .replace(/(threads[/]).*[.](\d+)$/, '$1$2')
-}
