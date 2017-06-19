@@ -74,13 +74,7 @@ class UpdateRSS {
         const matches = Object.keys(index.link)
           .filter(l => indexLink[l].slice(0, item.linkN.length) === item.linkN || indexLink[l] === item.linkN.slice(0, indexLink[l].length))
         if (matches) item.file = index.link[matches[0]]
-        if (!item.file && index.title[item.title]) {
-          if (index.title[item.title].length > 1) {
-            console.warn('ambinguous title', item.title, index.title[item.title])
-          } else {
-            item.file = index.title[item.title][0]
-          }
-        }
+        if (!item.file) item.file = titleMatch(item.title)
         if (!item.file) {
           todo.add[item.linkN] = item.title
         }
@@ -101,4 +95,24 @@ class UpdateRSS {
   }
 }
 
+
 module.exports = UpdateRSS
+
+function titleMatch (lookup) {
+  let matches
+  if (index.title[lookup]) {
+    matches = index.title[lookup]
+  } else {
+    matches = []
+    Object.keys(index.title).forEach(title => {
+      if (lookup.slice(0, title.length) === title) {
+        matches = matches.concat(index.title[title])
+      }
+    })
+  }
+  if (matches.length > 1) {
+    console.warn('ambinguous title', lookup, index.title[lookup])
+  } else if (matches.length > 0) {
+    return matches[0]
+  }
+}
