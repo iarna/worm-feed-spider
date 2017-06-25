@@ -8,7 +8,7 @@ const fetch = require('make-fetch-happen')
 
 const urls = {
   'ao3.atom': 'http://archiveofourown.org/tags/3319154/feed.atom',
-  'ffnet.atom': 'https://www.fanfiction.net/atom/l/?&cid1=10867&r=103&s=1',
+  'ffnet.atom': 'https://www.fanfiction.net/atom/l/?&cid1=10867&r=10&s=1',
   'sb-worm.rss': 'https://forums.spacebattles.com/forums/worm.115/index.rss',
   'sb-cw.rss': 'https://forums.spacebattles.com/forums/creative-writing.18/index.rss',
   'sb-quest.rss': 'https://forums.spacebattles.com/forums/roleplaying-quests.60/index.rss',
