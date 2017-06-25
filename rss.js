@@ -1,19 +1,19 @@
 'use strict'
-const ff = require('../../index.js')
 const fs = require('fs')
-const promisify = use('promisify')
+const promisify = require('bluebird').promisify
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 const fun = require('funstream')
 const feedstream = require('./feedstream.js')
-const index = require('../../.meta.index.json')
-const metaPath = '../../meta'
-const TOML = require('@iarna/TOML')
-const Fic = use('fic')
+const index = require('../.meta.index.json')
+const metaPath = '../'
+const TOML = require('@iarna/toml')
+require('fetch-fic')
+const Fic = require('fetch-fic/fic')
 const moment = require('moment')
 const sortedObject = require('sorted-object')
 const blacklist = require('./blacklist.json')
-const linkNormalize = require('../link-normalize.js')
+const linkNormalize = require('./link-normalize.js')
 
 Object.keys(blacklist).forEach(k => blacklist[linkNormalize(k)] = true)
 
@@ -91,6 +91,9 @@ class UpdateRSS {
       .forEach(item => {
         lastSeen[item.file] = moment(item.updated).toISOString()
         todo.update[item.file] = (todo.update[item.file] || 0) + 1
+      }).catch(err => {
+        console.error(err.stack)
+        throw err
       })
   }
 }

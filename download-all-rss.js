@@ -1,13 +1,10 @@
 'use strict'
-const ff = require('../../index.js')
-const promisify = use('promisify')
+const promisify = require('fetch-fic/util/promisify')
 const fs = require('fs')
-const writeFile = promisify(fs.writeFile)
 const Bluebird = require('bluebird')
+const writeFile = promisify(fs.writeFile)
 const os = require('os')
-const fetch = require('make-fetch-happen').defaults({
-  cacheManager: `${os.homedir()}/.fetch-fic/rss`
-})
+const fetch = require('make-fetch-happen')
 
 const urls = {
   'ao3.atom': 'http://archiveofourown.org/tags/3319154/feed.atom',
